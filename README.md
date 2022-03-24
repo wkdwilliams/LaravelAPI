@@ -12,11 +12,7 @@ To conveniently create a new resource within the App directory, run this command
 Then add the CRUD routes pointing to the newly created controller like so;
 
 ```php
-$router->get('/category/{id}',  '\App\Category\Controllers\CategoryController@getResource');
-$router->get('/category',       '\App\Category\Controllers\CategoryController@getResources');
-$router->post('/category',      '\App\Category\Controllers\CategoryController@createResource');
-$router->put('/category',       '\App\Category\Controllers\CategoryController@updateResource');
-$router->delete('/category',    '\App\Category\Controllers\CategoryController@deleteResource');
+Route::resource('/category', '\App\Category\Controllers\CategoryController');
 ```
 
 Take note of the product datamapper, entity, collection and resource for a demonstration on how to set it up further.
