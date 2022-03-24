@@ -1,0 +1,196 @@
+<?php
+
+namespace Core\Controllers;
+
+use Core\Exceptions\InvalidIdException;
+use Core\Model;
+use Core\Service;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Routing\Controller as BaseController;
+
+class Controller extends BaseController
+{
+    /**
+     * @var array
+     */
+    protected array $classes;
+
+    /**
+     * @var Service
+     */
+    protected Service $service;
+
+    /**
+     * @var Request
+     */
+    protected Request $request;
+
+    /**
+     * The fields that we don't want users to update
+     * @var array
+     */
+    protected array $guardedUpdateFields = [];
+
+    /**
+     * The fields that we don't want users to create
+     * @var array
+     */
+    protected array $guardedCreateFields = [];
+
+    /**
+     * The validation rules we want when updating a resource
+     * @var array
+     */
+    protected array $updateRules = [];
+
+    /**
+     * The validation rules we want when creating a resource
+     * @var array
+     */
+    protected array $createRules = [];
+
+    /**
+     * The amount of pagination we want to use
+     * when getting multiple recourds
+     * @var int
+     */
+    protected int $paginate = 0;
+
+    /**
+     * This gives us quick access to the authenticated user
+     * @var Model|null
+     */
+    protected ?Model $authenticatedUser;
+
+    /**
+     * Controller constructor.
+     * 
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->authenticatedUser = auth()->user();
+        $this->request           = $request;
+
+        // TODO: set this in global middleware
+        if($this->request->id !== null)
+            if(!is_numeric($this->request->id))
+                throw new InvalidIdException();
+
+        $this->service = new $this->classes['service'](
+            new $this->classes['repository'](
+                $this->paginate,
+                $this->request->get('page') ?? 1
+            )
+        );
+    }
+
+    /**
+     * Return response of our resource
+     * 
+     * @param JsonResource $resource
+     * 
+     * @return JsonResponse
+     */
+    protected function response(JsonResource $resource, int $status=200): JsonResponse
+    {
+        return response()->json([
+            'status' => $status,
+            'data'   => $resource
+        ], $status);
+    }
+
+    /**
+     * Get resource by id
+     * 
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
+    {
+        $repos = $this->service->getResourceById($id);
+
+        return $this->response(
+            new $this->classes['resource']($repos)
+        );
+    }
+
+    /**
+     * Get all resources
+     * 
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        $repos = $this->service->getResources();
+
+        return $this->response(
+            new $this->classes['collection']($repos)
+        );
+    }
+
+    /**
+     * Create resource
+     * 
+     * @return JsonResponse
+     */
+    public function store(): JsonResponse
+    {
+        foreach ($this->guardedCreateFields as $field) {
+            $this->request->request->remove($field);
+        }
+
+        $this->request->validate($this->createRules);
+
+        $data = $this->request->all();
+
+        $repos = $this->service->createResource($data);
+
+        return $this->response(
+            new $this->classes['resource']($repos),
+            201
+        );
+    }
+
+    /**
+     * Update resource
+     * 
+     * @return JsonResponse
+     */
+    public function update(int $id): JsonResponse
+    {
+        foreach ($this->guardedUpdateFields as $field) {
+            $this->request->request->remove($field);
+        }
+
+        $this->request->validate($this->updateRules);
+
+        $data = $this->request->all();
+
+        $repos = $this->service->updateResource([
+            'id' => $id,
+            ...$data
+        ]);
+
+        return $this->response(
+            new $this->classes['resource']($repos)
+        );
+    }
+
+    /**
+     * Delete resource
+     * 
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $repos = $this->service->deleteResource($id);
+
+        return $this->response(
+            new $this->classes['resource']($repos)
+        );
+    }
+
+}

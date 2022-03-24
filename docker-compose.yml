@@ -1,0 +1,86 @@
+version: "3.7"
+ 
+networks:
+  default:
+    driver: bridge
+ 
+services:
+ 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html/
+    volumes:
+      - ./:/var/www/html/
+      - ./DockerFiles/Apache/:/etc/apache2/sites-enabled/
+    ports:
+      - 80:80
+    networks:
+      - default
+
+  app-jobs:
+    build:
+      context: .
+      dockerfile: Dockerfile-jobs
+    container_name: app-jobs
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html/
+    command: "php artisan queue:work"
+    volumes:
+        - ./:/var/www/html/
+    networks:
+        - default
+ 
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8088:80"
+
+  db:
+    image: mysql:5.7.32
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: main
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+    networks:
+      - default
+
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass irsehfgriuh98654654frjngvhj
+    volumes: 
+      - cache:/data
+    networks:
+      - default
+    
+volumes:
+  dbdata:
+    driver: local
+  cache:
+    driver: local
