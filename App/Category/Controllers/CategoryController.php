@@ -23,6 +23,10 @@ class CategoryController extends Controller
         'model'      => Category::class,
     ];
 
+    protected array $createRules = [
+        'name' => 'required'
+    ];
+
     public function getResourceByName(string $name): JsonResponse
     {
         $repos = $this->service->getResourceByName($name);

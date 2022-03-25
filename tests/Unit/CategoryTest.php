@@ -1,23 +1,24 @@
 <?php
 
+use App\Category\Repositories\CategoryRepository;
+use Core\Repository;
 use Tests\TestCase;
+use Tests\TestRequests;
 
 class CategoryTest extends TestCase
 {
 
-    public function testGetCategories()
-    {
-        $response = $this->get('/api/category');
+    use TestRequests;
 
-        $response->assertStatus(200);
-        $this->assertArrayHasKey('data', json_decode($response->getContent(), true));
-    }
+    protected $repository           = CategoryRepository::class;
+    protected string $endPointName  = "category";
 
-    public function testGetCategory()
-    {
-        $response = $this->get('/api/category/1');
+    protected array $createParams = [
+        'name' => "testCat"
+    ];
 
-        $response->assertStatus(200);
-        $this->assertArrayHasKey('data', json_decode($response->getContent(), true));
-    }
+    protected array $updateParams = [
+        'name' => 'updatedCat'
+    ];
+
 }
