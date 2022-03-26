@@ -272,19 +272,27 @@ abstract class Repository
         if($this->paginate > 0){
             if(!env('APP_DEBUG')) // Only use the cache in production
                 $data = Cache::remember($this->cacheKey.":page:".$this->page, Carbon::now()->addHour(), function(){
-                    return $this->getQuery()->paginate($this->paginate)->toArray()['data'];
+                    return $this->getQuery()->paginate($this->paginate, ['*'], 'page', $this->page)->toArray();
                 });
             else
-                $data = $this->getQuery()->paginate($this->paginate, ['*'], 'page', $this->page)->toArray()['data'];
+                $data = $this->getQuery()->paginate($this->paginate, ['*'], 'page', $this->page)->toArray();
+
+            $collection = $this->datamapper->repoToEntityCollection($data['data']);
+            $collection->setPaginatedData([
+                'total'         => $data['total'],
+                'current_page'  => $data['current_page'],
+                'per_page'      => $data['per_page'],
+                'last_page'     => $data['last_page']
+            ]);
+            return $collection;
         }
+
+        if(!env('APP_DEBUG')) // Only use the cache in production
+            $data = Cache::remember($this->cacheKey.":all", Carbon::now()->addHour(), function(){
+                return $this->getQuery()->get()->toArray();
+            });
         else{
-            if(!env('APP_DEBUG')) // Only use the cache in production
-                $data = Cache::remember($this->cacheKey.":all", Carbon::now()->addHour(), function(){
-                    return $this->getQuery()->get()->toArray();
-                });
-            else{
-                $data = $this->getQuery()->get()->toArray();
-            }
+            $data = $this->getQuery()->get()->toArray();
         }
 
         return $this->datamapper->repoToEntityCollection($data);

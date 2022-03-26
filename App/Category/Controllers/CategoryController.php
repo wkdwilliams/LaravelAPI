@@ -13,6 +13,8 @@ use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
+
+    protected int $paginate = 5;
     
     protected array $classes = [
         'datamapper' => CategoryDataMapper::class,

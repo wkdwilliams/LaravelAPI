@@ -94,11 +94,12 @@ class Controller extends BaseController
      * 
      * @return JsonResponse
      */
-    protected function response(JsonResource $resource, int $status=200): JsonResponse
+    protected function response(JsonResource $resource, array $paginateData=null, int $status=200): JsonResponse
     {
         return response()->json([
             'status' => $status,
-            'data'   => $resource
+            'data'   => $resource,
+            ...$paginateData ?? []
         ], $status);
     }
 
@@ -127,7 +128,7 @@ class Controller extends BaseController
         $repos = $this->service->getResources();
 
         return $this->response(
-            new $this->classes['collection']($repos)
+            new $this->classes['collection']($repos), $repos->getPaginatedData()
         );
     }
 
@@ -149,8 +150,7 @@ class Controller extends BaseController
         $repos = $this->service->createResource($data);
 
         return $this->response(
-            new $this->classes['resource']($repos),
-            201
+            new $this->classes['resource']($repos), null, 201
         );
     }
 
