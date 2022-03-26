@@ -5,6 +5,8 @@ An API that heavily relies on object-oriented design. This API implements conven
 Simple CRUD implementation eases the process of implementing your own API.
 
 # Documentation
+## Folder structure
+The `Core` folder contains our middleware, jobs, providers and abstract classes. Typically in Laravel, this is the `app` directory. The `App` directory contains our resources.
 ## Make a new resource
 To conveniently create a new resource within the App directory, run this command:
 
@@ -16,7 +18,10 @@ Route::resource('/category', '\App\Category\Controllers\CategoryController');
 ```
 
 Take note of the product datamapper, entity, collection and resource for a demonstration on how to set it up further.
-## Gaurded update fields
+
+## Controller
+
+### Gaurded update fields
 To prevent certain fields from being updated when using the update method, you may override the default behaviour with this:
 
 ```php
@@ -27,7 +32,7 @@ protected array $guardedUpdateFields  = [
 
 This will prevent users from sending POST property `api_token` in an attempt to update a field they shouldn't.
 
-## Gaurded create fields
+### Gaurded create fields
 To prevent certain fields from being updated when using the update method, you may override the default behaviour with this:
 
 ```php
@@ -38,14 +43,67 @@ protected array $guardedCreateFields  = [
 
 This will prevent users from sending POST property `api_token` in an attempt to set the field when creating it.
 
-## Pagination
+### Create rules
+
+Here we can define the validation rules for when we intend to create a resource.
+
+```php
+protected array $createRules = [
+    'name'        => 'required|string',
+    'description' => 'required|string|max:255'
+];
+```
+
+### Update rules
+
+Here we can define the validation rules for when we intend to update a resource.
+
+```php
+protected array $updateRules = [
+    'name'        => 'required|string',
+    'description' => 'required|string|max:255'
+];
+```
+
+### Pagination
 By default, pagination is disabled. When extending `Core\Controller.php`, you may override this inside your controller class with:
 
 ```php
-protected int $paginate = 5;
+protected int $paginate = 3;
 ```
 
-This will return 5 results per page. Navigating to the endpoint `http://localhost/api/user?page=2` should access our records on page 2.
+This will return 3 results per page. Navigating to the endpoint `http://localhost/api/user?page=2` should access our records on page 2.
+
+The content of the response will show in this kind of format, with the pagination information at the bottom;
+```json
+{
+  "status": 200,
+  "data": [
+    {
+      "id": "4",
+      "name": "consequatur",
+      "created_at": "2022-03-26 15:03:26",
+      "updated_at": "2022-03-26 15:03:26"
+    },
+    {
+      "id": "5",
+      "name": "incidunt",
+      "created_at": "2022-03-26 15:03:26",
+      "updated_at": "2022-03-26 15:03:26"
+    },
+    {
+      "id": "6",
+      "name": "est",
+      "created_at": "2022-03-26 15:03:26",
+      "updated_at": "2022-03-26 15:03:26"
+    }
+  ],
+  "total": 20000,
+  "current_page": 2,
+  "per_page": 3,
+  "last_page": 6667
+}
+```
 
 ## Repository
 The repository is what is used to obtain records from the model. The repository works similarly to the eloquent model.
@@ -122,4 +180,66 @@ The repository will cache results if `APP_DEBUG` is set to false in the `.env` f
 
 ## Datamapper
 
-To complete...
+The datamapper is what deals with the business logic. It converts data from a repository into data we can work with.
+
+```php
+protected function fromRepository(array $data): array
+{
+    return [
+        'id'         => $data['id'],
+        'name'       => $data['name'],
+        'created_at' => $data['created_at'],
+        'updated_at' => $data['updated_at'],
+    ];
+}
+```
+
+The above code demonstrates the mapping of data from the repository, and populates these values into an entity.
+
+```php
+protected function toRepository(array $data): array
+{
+    return [
+        'name' => $data['name']
+    ];
+}
+```
+
+The above code demonstrates mapping data intended to go to the repository. Typically, for when we update and create records. Setting values for `id`, `created_at` and `updated_at` is not recommended since the database handles the creation of these fields, and the repository handles the updating of the `updated_at` field for us, and so the repository filters out these values.
+
+```php
+protected function fromEntity(Entity $data): array
+{
+    return [
+        'id'         => $data->getId(),
+        'name'       => $data->getName(),
+        'updated_at' => $data->getUpdatedAt(),
+        'created_at' => $data->getCreatedAt()
+    ];
+}
+```
+
+The above code demonstrates how we map data from an entity to an array.
+
+## Entity
+
+The entity is what represents of database records. When we grab data from the repository, the repository maps that data to the entity using the datamapper.
+
+```php
+class CategoryEntity extends Entity
+{
+    protected string $name;
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+}
+```
+
+The above code demonstrates how you should setup the entity when the database table has a `name` field. The Entity abstract class already has getters and setters for `id`, `created_at` and `updated_at`.
