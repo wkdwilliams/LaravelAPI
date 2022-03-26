@@ -6,7 +6,7 @@ Simple CRUD implementation eases the process of implementing your own API.
 
 # Documentation
 ## Folder structure
-The `Core` folder contains our middleware, jobs, providers and abstract classes. Typically in Laravel, this is the `app` directory. The `App` directory contains our resources.
+The `Core` folder contains our middleware, jobs, providers and abstract classes. Typically in Laravel, this is the `app` directory. The `App` directory contains our resources. Do not mistake Laravel's `app` directory with the `App` directory here.
 ## Make a new resource
 To conveniently create a new resource within the App directory, run this command:
 
@@ -17,7 +17,7 @@ Then add the CRUD routes pointing to the newly created controller like so;
 Route::resource('/category', '\App\Category\Controllers\CategoryController');
 ```
 
-Take note of the product datamapper, entity, collection and resource for a demonstration on how to set it up further.
+This command also creates the migration, factory & provides the seeder you should include.
 
 ## Controller
 
