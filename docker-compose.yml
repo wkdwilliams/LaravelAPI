@@ -20,6 +20,7 @@ services:
     volumes:
       - ./:/var/www/html/
       - ./DockerFiles/Apache/:/etc/apache2/sites-enabled/
+      - ./DockerFiles/php/php.ini:/usr/local/etc/php/php.ini
     ports:
       - 80:80
     networks:
