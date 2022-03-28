@@ -5,6 +5,7 @@ namespace Tests;
 use App\User\Models\User;
 use Core\Entity;
 use Core\Repository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase

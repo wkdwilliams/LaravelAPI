@@ -46,4 +46,62 @@ trait TestAuthRequests
         $response->assertStatus(200);
         $this->assertArrayHasKey('data', json_decode($response->getContent(), true));
     }
+
+    public function testDeleteResource()
+    {
+        // Get resource of which we created in the create test
+        $entity = (new $this->repository)
+                ->queryBuilder(function($m){
+                    return $m->latest();
+                })->entity();
+
+        $response = $this->actingAs($this->getAuthUser())->delete('/api/'.$this->endPointName.'/'.$entity->getId());
+
+        $response->assertStatus(200);
+    }
+
+    public function testCannotGetResourceNotBelongingToYou()
+    {
+        // Get a resource that doesn't belong to our authenticated user
+        $entity = (new $this->repository)->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
+
+        $response = $this->actingAs($this->getAuthUser())->get('/api/'.$this->endPointName.'/'.$entity->getId());
+
+        $response->assertStatus(403);
+    }
+
+    public function testCannotGetResourcesNotBelongingToYou()
+    {
+        $response = $this->actingAs($this->getAuthUser())->get('/api/'.$this->endPointName);
+
+        $json = json_decode($response->getContent(), true);
+
+        $response->assertStatus(200);
+        $this->assertArrayHasKey('data', $json, true);
+
+        // Check if each resource has user_id of the authenticated user we're using
+        foreach($json['data'] as $j)
+            $this->assertTrue($j['user_id'] === $this->getAuthUser()->id);
+
+    }
+
+    public function testCannotUpdateResourceNotBelongingToYou()
+    {
+        // Get resource that doesn't belong to authenticated user
+        $entity = (new $this->repository)->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
+
+        $response = $this->actingAs($this->getAuthUser())->put('/api/'.$this->endPointName.'/'.$entity->getId(), $this->updateParams);
+
+        $response->assertStatus(403);
+    }
+
+    public function testCannotDeleteResourceNotBelongingToYou()
+    {
+        // Get resource that doesn't belong to authenticated user
+        $entity = (new $this->repository)->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
+
+        $response = $this->actingAs($this->getAuthUser())->delete('/api/'.$this->endPointName.'/'.$entity->getId());
+
+        $response->assertStatus(403);
+    }
 }

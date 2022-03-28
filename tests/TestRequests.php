@@ -45,4 +45,17 @@ trait TestRequests
         $response->assertStatus(200);
         $this->assertArrayHasKey('data', json_decode($response->getContent(), true));
     }
+
+    public function testDeleteResource()
+    {
+        // Get resource of which we created in the create test
+        $entity = (new $this->repository)
+                ->queryBuilder(function($m){
+                    return $m->latest();
+                })->entity();
+
+        $response = $this->delete('/api/'.$this->endPointName.'/'.$entity->getId());
+
+        $response->assertStatus(200);
+    }
 }
