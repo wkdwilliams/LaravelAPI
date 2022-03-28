@@ -13,6 +13,7 @@ trait CreateResourceWithAuthId
      */
     public function store(): JsonResponse
     {
+        $this->request->request->remove('user_id');
         $this->request->request->add([
             'user_id' => $this->authenticatedUser->id
         ]);

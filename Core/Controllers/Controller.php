@@ -74,17 +74,15 @@ class Controller extends BaseController
         $this->authenticatedUser = auth()->user();
         $this->request           = $request;
 
-        // TODO: set this in global middleware
-        if($this->request->id !== null)
-            if(!is_numeric($this->request->id))
-                throw new InvalidIdException();
-
         $this->service = new $this->classes['service'](
             new $this->classes['repository'](
                 $this->paginate,
                 $this->request->get('page') ?? 1
             )
         );
+
+        // Append guarded fields for all resources.
+        $this->guardedUpdateFields[] = 'user_id';
     }
 
     /**
