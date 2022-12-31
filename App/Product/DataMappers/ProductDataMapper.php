@@ -4,8 +4,8 @@ namespace App\Product\DataMappers;
 
 use App\Category\DataMappers\CategoryDataMapper;
 use App\Product\Entities\ProductEntity;
-use Core\DataMapper;
-use Core\Entity;
+use Lewy\DataMapper\DataMapper;
+use Lewy\DataMapper\Entity;
     
 class ProductDataMapper extends DataMapper
 {

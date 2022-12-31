@@ -2,7 +2,6 @@
 
 namespace Core\Jobs;
 
-use App\User\Models\User;
 use Illuminate\Queue\SerializesModels;
 
 class ExampleJob extends Job

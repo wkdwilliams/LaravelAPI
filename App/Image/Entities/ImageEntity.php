@@ -2,7 +2,7 @@
 
 namespace App\Image\Entities;
 
-use Core\Entity;
+use Lewy\DataMapper\Entity;
 
 class ImageEntity extends Entity
 {

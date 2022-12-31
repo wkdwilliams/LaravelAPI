@@ -3,7 +3,7 @@
 namespace App\Message\Models;
 
 use App\Image\Models\Image;
-use Core\Model;
+use Lewy\DataMapper\Model;
 
 class Message extends Model
 {

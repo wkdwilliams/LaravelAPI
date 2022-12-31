@@ -8,8 +8,8 @@ use App\Category\Repositories\CategoryRepository;
 use App\Category\Resources\CategoryCollection;
 use App\Category\Resources\CategoryResource;
 use App\Category\Services\CategoryService;
-use Core\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Lewy\DataMapper\Controller;
 
 class CategoryController extends Controller
 {

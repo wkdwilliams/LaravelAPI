@@ -2,7 +2,7 @@
 
 namespace App\Image\Resources;
 
-use Core\ResourceCollection;
+use Lewy\DataMapper\ResourceCollection;
 
 class ImageCollection extends ResourceCollection
 {

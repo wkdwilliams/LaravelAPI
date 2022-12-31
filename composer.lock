@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1a8a9f6378ebbd500d8aab3d12a3859",
+    "content-hash": "3df1234040f21f55cf0a8d8fa20732f4",
     "packages": [
         {
             "name": "brick/math",
@@ -1314,6 +1314,48 @@
                 }
             ],
             "time": "2021-11-21T11:48:40+00:00"
+        },
+        {
+            "name": "lewy/datamapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wkdwilliams/datamapper.git",
+                "reference": "41290f32ae9ef3eff7a956b6fbe97e7c3920145f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wkdwilliams/datamapper/zipball/41290f32ae9ef3eff7a956b6fbe97e7c3920145f",
+                "reference": "41290f32ae9ef3eff7a956b6fbe97e7c3920145f",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.57",
+                "predis/predis": "^1.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lewy\\DataMapper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "wkdwilliams",
+                    "email": "31390496+wkdwilliams@users.noreply.github.com"
+                }
+            ],
+            "description": "This package provides a repository, entity & datamapper design pattern",
+            "support": {
+                "issues": "https://github.com/wkdwilliams/datamapper/issues",
+                "source": "https://github.com/wkdwilliams/datamapper/tree/master"
+            },
+            "time": "2022-04-18T03:32:08+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -7482,12 +7524,13 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "lewy/datamapper": 20,
         "tomfordrumm/jwt-auth": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.2"
+        "php": "^8.1"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"

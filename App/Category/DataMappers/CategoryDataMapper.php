@@ -3,8 +3,8 @@
 namespace App\Category\DataMappers;
     
 use App\Category\Entities\CategoryEntity;
-use Core\DataMapper;
-use Core\Entity;
+use Lewy\DataMapper\DataMapper;
+use Lewy\DataMapper\Entity;
     
 class CategoryDataMapper extends DataMapper
 {

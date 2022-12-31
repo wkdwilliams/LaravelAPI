@@ -18,8 +18,8 @@ class MakeResourceCommand extends Command
 namespace App\@@@@@@@@@@@@\DataMappers;
     
 use App\@@@@@@@@@@@@\Entities\@@@@@@@@@@@@Entity;
-use Core\DataMapper;
-use Core\Entity;
+use Lewy\DataMapper\DataMapper;
+use Lewy\DataMapper\Entity;
     
 class @@@@@@@@@@@@DataMapper extends DataMapper
 {
@@ -66,7 +66,7 @@ use App\@@@@@@@@@@@@\Repositories\@@@@@@@@@@@@Repository;
 use App\@@@@@@@@@@@@\Resources\@@@@@@@@@@@@Collection;
 use App\@@@@@@@@@@@@\Resources\@@@@@@@@@@@@Resource;
 use App\@@@@@@@@@@@@\Services\@@@@@@@@@@@@Service;
-use Core\Controllers\Controller;
+use Lewy\DataMapper\Controllers\Controller;
     
 class @@@@@@@@@@@@Controller extends Controller
 {
@@ -89,7 +89,7 @@ class @@@@@@@@@@@@Controller extends Controller
 
 namespace App\@@@@@@@@@@@@\Entities;
     
-use Core\Entity;
+use Lewy\DataMapper\Entity;
     
 class @@@@@@@@@@@@Entity extends Entity
 {
@@ -101,7 +101,7 @@ class @@@@@@@@@@@@Entity extends Entity
 
 namespace App\@@@@@@@@@@@@\Models;
     
-use Core\Model;
+use Lewy\DataMapper\Model;
     
 class @@@@@@@@@@@@ extends Model
 {
@@ -119,7 +119,7 @@ namespace App\@@@@@@@@@@@@\Repositories;
 
 use App\@@@@@@@@@@@@\DataMappers\@@@@@@@@@@@@DataMapper;
 use App\@@@@@@@@@@@@\Models\@@@@@@@@@@@@;
-use Core\Repository;
+use Lewy\DataMapper\Repository;
     
 class @@@@@@@@@@@@Repository extends Repository
 {
@@ -154,7 +154,7 @@ class @@@@@@@@@@@@Resource extends JsonResource
 
 namespace App\@@@@@@@@@@@@\Resources;
     
-use Core\ResourceCollection;
+use Lewy\DataMapper\ResourceCollection;
     
 class @@@@@@@@@@@@Collection extends ResourceCollection
 {
@@ -172,7 +172,7 @@ class @@@@@@@@@@@@Collection extends ResourceCollection
 
 namespace App\@@@@@@@@@@@@\Services;
     
-use Core\Service;
+use Lewy\DataMapper\Service;
     
 class @@@@@@@@@@@@Service extends Service
 {

@@ -2,8 +2,8 @@
 
 namespace App\Message\Entities;
 
-use Core\Entity;
-use Core\EntityCollection;
+use Lewy\DataMapper\Entity;
+use Lewy\DataMapper\EntityCollection;
 
 class MessageEntity extends Entity
 {

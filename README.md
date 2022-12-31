@@ -6,7 +6,7 @@ Simple CRUD implementation eases the process of implementing your own API.
 
 # Documentation
 ## Folder structure
-The `Core` folder contains our middleware, jobs, providers and abstract classes. Typically in Laravel, this is the `app` directory. The `App` directory contains our resources. Do not mistake Laravel's `app` directory with the `App` directory here.
+The `Core` folder contains our middleware, jobs, providers etc. Typically in Laravel, this is the `app` directory. The `App` directory contains our resources. Do not mistake Laravel's `app` directory with the `App` directory here.
 ## Make a new resource
 To conveniently create a new resource within the App directory, run this command:
 
@@ -66,7 +66,7 @@ protected array $updateRules = [
 ```
 
 ### Pagination
-By default, pagination is disabled. When extending `Core\Controller.php`, you may override this inside your controller class with:
+By default, pagination is disabled. When extending `Lewy\DataMapper\Controller`, you may override this inside your controller class with:
 
 ```php
 protected int $paginate = 3;
@@ -115,8 +115,8 @@ The repository is what is used to obtain records from the model. The repository 
 
 namespace App\User\Services;
 
-use Core\EntityCollection;
-use Core\Service;
+use Lewy\DataMapper\EntityCollection;
+use Lewy\DataMapper\Service;
 
 class UserService extends Service
 {
@@ -137,8 +137,8 @@ The above code will find all records from `users`, sort it by id in descending o
 
 namespace App\User\Services;
 
-use Core\EntityCollection;
-use Core\Service;
+use Lewy\DataMapper\EntityCollection;
+use Lewy\DataMapper\Service;
 
 class UserService extends Service
 {
@@ -159,8 +159,8 @@ The repository does not inherit all the query building methods, and you may want
 
 namespace App\User\Services;
 
-use Core\EntityCollection;
-use Core\Service;
+use Lewy\DataMapper\EntityCollection;
+use Lewy\DataMapper\Service;
 
 class UserService extends Service
 {

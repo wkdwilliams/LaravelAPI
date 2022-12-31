@@ -3,7 +3,7 @@
 namespace App\User\Models;
 
 use App\Message\Models\Message;
-use Core\Model;
+use Lewy\DataMapper\Model;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;

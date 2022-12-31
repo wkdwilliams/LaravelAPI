@@ -1,7 +1,7 @@
 <?php
 
 use App\Category\Repositories\CategoryRepository;
-use Core\Repository;
+use Lewy\DataMapper\Repository;
 use Tests\TestCase;
 use Tests\TestRequests;
 

@@ -2,7 +2,7 @@
 
 namespace App\Product\Entities;
     
-use Core\Entity;
+use Lewy\DataMapper\Entity;
 
 class ProductEntity extends Entity
 {

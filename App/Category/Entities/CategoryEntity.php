@@ -2,7 +2,7 @@
 
 namespace App\Category\Entities;
     
-use Core\Entity;
+use Lewy\DataMapper\Entity;
     
 class CategoryEntity extends Entity
 {

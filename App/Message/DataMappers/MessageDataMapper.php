@@ -4,8 +4,8 @@ namespace App\Message\DataMappers;
 
 use App\Image\DataMappers\ImageDataMapper;
 use App\Message\Entities\MessageEntity;
-use Core\DataMapper;
-use Core\Entity;
+use Lewy\DataMapper\DataMapper;
+use Lewy\DataMapper\Entity;
 
 class MessageDataMapper extends DataMapper
 {

@@ -2,7 +2,7 @@
 
 namespace App\Product\Resources;
     
-use Core\ResourceCollection;
+use Lewy\DataMapper\ResourceCollection;
     
 class ProductCollection extends ResourceCollection
 {

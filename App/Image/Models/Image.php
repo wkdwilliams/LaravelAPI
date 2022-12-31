@@ -2,7 +2,7 @@
 
 namespace App\Image\Models;
 
-use Core\Model;
+use Lewy\DataMapper\Model;
 
 class Image extends Model
 {

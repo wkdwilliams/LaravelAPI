@@ -2,8 +2,8 @@
 
 namespace App\User\Entities;
 
-use Core\Entity;
-use Core\EntityCollection;
+use Lewy\DataMapper\Entity;
+use Lewy\DataMapper\EntityCollection;
 
 class UserEntity extends Entity
 {

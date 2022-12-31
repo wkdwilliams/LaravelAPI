@@ -4,8 +4,8 @@ namespace App\User\DataMappers;
 
 use App\Message\DataMappers\MessageDataMapper;
 use App\User\Entities\UserEntity;
-use Core\DataMapper;
-use Core\Entity;
+use Lewy\DataMapper\DataMapper;
+use Lewy\DataMapper\Entity;
 
 class UserDataMapper extends DataMapper
 {

@@ -2,8 +2,8 @@
 
 namespace App\User\Services;
 
-use Core\Entity;
-use Core\Service;
+use Lewy\DataMapper\Entity;
+use Lewy\DataMapper\Service;
 use Illuminate\Support\Facades\Hash;
 
 class UserService extends Service

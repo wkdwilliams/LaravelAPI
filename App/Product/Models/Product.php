@@ -3,7 +3,7 @@
 namespace App\Product\Models;
 
 use App\Category\Models\Category;
-use Core\Model;
+use Lewy\DataMapper\Model;
 
 class Product extends Model
 {

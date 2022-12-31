@@ -2,7 +2,7 @@
 
 namespace App\Product\Services;
 
-use Core\Service;
+use Lewy\DataMapper\Service;
 
 class ProductService extends Service
 {

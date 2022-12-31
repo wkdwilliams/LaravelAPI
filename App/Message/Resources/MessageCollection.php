@@ -2,7 +2,7 @@
 
 namespace App\Message\Resources;
 
-use Core\ResourceCollection;
+use Lewy\DataMapper\ResourceCollection;
 
 class MessageCollection extends ResourceCollection
 {

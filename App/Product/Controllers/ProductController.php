@@ -8,14 +8,14 @@ use App\Product\Repositories\ProductRepository;
 use App\Product\Resources\ProductCollection;
 use App\Product\Resources\ProductResource;
 use App\Product\Services\ProductService;
-use Core\Controllers\Controller;
-use Core\Traits\CheckResourceBelongsToUser;
-use Core\Traits\CreateResourceWithAuthId;
+use Lewy\DataMapper\Traits\ResourceMustBelongToAuthenticatedUser;
+use Lewy\DataMapper\Controller;
+use Lewy\DataMapper\Traits\CreateResourceWithAuthId;
 
 class ProductController extends Controller
 {
 
-    use CheckResourceBelongsToUser;
+    use ResourceMustBelongToAuthenticatedUser;
     use CreateResourceWithAuthId;
     
     protected array $classes = [

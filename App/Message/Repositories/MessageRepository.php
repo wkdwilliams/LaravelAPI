@@ -4,7 +4,7 @@ namespace App\Message\Repositories;
 
 use App\Message\DataMappers\MessageDataMapper;
 use App\Message\Models\Message;
-use Core\Repository;
+use Lewy\DataMapper\Repository;
 
 class MessageRepository extends Repository
 {

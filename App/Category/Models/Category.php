@@ -2,7 +2,7 @@
 
 namespace App\Category\Models;
     
-use Core\Model;
+use Lewy\DataMapper\Model;
     
 class Category extends Model
 {

@@ -4,7 +4,7 @@ namespace App\Image\Repositories;
 
 use App\Image\DataMappers\ImageDataMapper;
 use App\Image\Models\Image;
-use Core\Repository;
+use Lewy\DataMapper\Repository;
 
 class ImageRepository extends Repository
 {

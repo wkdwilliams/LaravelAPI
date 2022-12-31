@@ -4,7 +4,7 @@ namespace App\Category\Repositories;
 
 use App\Category\DataMappers\CategoryDataMapper;
 use App\Category\Models\Category;
-use Core\Repository;
+use Lewy\DataMapper\Repository;
     
 class CategoryRepository extends Repository
 {

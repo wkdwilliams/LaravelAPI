@@ -2,7 +2,7 @@
 
 namespace App\Category\Resources;
     
-use Core\ResourceCollection;
+use Lewy\DataMapper\ResourceCollection;
     
 class CategoryCollection extends ResourceCollection
 {

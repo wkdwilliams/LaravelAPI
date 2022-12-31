@@ -2,7 +2,7 @@
 
 namespace App\User\Resources;
 
-use Core\ResourceCollection;
+use Lewy\DataMapper\ResourceCollection;
 
 class UserCollection extends ResourceCollection
 {

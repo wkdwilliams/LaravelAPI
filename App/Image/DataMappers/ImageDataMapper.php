@@ -3,8 +3,8 @@
 namespace App\Image\DataMappers;
 
 use App\Image\Entities\ImageEntity;
-use Core\DataMapper;
-use Core\Entity;
+use Lewy\DataMapper\DataMapper;
+use Lewy\DataMapper\Entity;
 
 class ImageDataMapper extends DataMapper
 {

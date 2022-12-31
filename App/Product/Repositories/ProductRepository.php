@@ -4,7 +4,7 @@ namespace App\Product\Repositories;
 
 use App\Product\DataMappers\ProductDataMapper;
 use App\Product\Models\Product;
-use Core\Repository;
+use Lewy\DataMapper\Repository;
     
 class ProductRepository extends Repository
 {

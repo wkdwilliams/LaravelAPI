@@ -2,9 +2,9 @@
 
 namespace App\Category\Services;
 
-use Core\Entity;
-use Core\Service;
-    
+use Lewy\DataMapper\Entity;
+use Lewy\DataMapper\Service;
+
 class CategoryService extends Service
 {
 
