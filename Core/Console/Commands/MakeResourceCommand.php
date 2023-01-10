@@ -8,8 +8,8 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeResourceCommand extends Command
 {
 
-    protected $signature = 'make:resource {name}';
-    protected $name      = 'make:resource';
+    protected $signature = 'make:entity {name}';
+    protected $name      = 'make:entity';
 
     protected $description = "Create a new resource";
 
@@ -66,18 +66,18 @@ use App\@@@@@@@@@@@@\Repositories\@@@@@@@@@@@@Repository;
 use App\@@@@@@@@@@@@\Resources\@@@@@@@@@@@@Collection;
 use App\@@@@@@@@@@@@\Resources\@@@@@@@@@@@@Resource;
 use App\@@@@@@@@@@@@\Services\@@@@@@@@@@@@Service;
-use Lewy\DataMapper\Controllers\Controller;
+use Lewy\DataMapper\Controller;
     
 class @@@@@@@@@@@@Controller extends Controller
 {
     
     protected array \$classes = [
-        'datamapper' => @@@@@@@@@@@@DataMapper::class,
-        'repository' => @@@@@@@@@@@@Repository::class,
-        'resource'   => @@@@@@@@@@@@Resource::class,
-        'collection' => @@@@@@@@@@@@Collection::class,
-        'service'    => @@@@@@@@@@@@Service::class,
-        'model'      => @@@@@@@@@@@@::class,
+        'datamapper'    => @@@@@@@@@@@@DataMapper::class,
+        'repository'    => @@@@@@@@@@@@Repository::class,
+        'resource'      => @@@@@@@@@@@@Resource::class,
+        'collection'    => @@@@@@@@@@@@Collection::class,
+        'service'       => @@@@@@@@@@@@Service::class,
+        'model'         => @@@@@@@@@@@@::class
     ];
 
     protected int \$paginate = 0;
@@ -214,6 +214,40 @@ class @@@@@@@@@@@@Seeder extends Seeder
 }
 ";
 
+    private $createFormRequest = "<?php
+
+namespace App\@@@@@@@@@@@@\Requests;
+    
+use Illuminate\Foundation\Http\FormRequest;
+    
+class @@@@@@@@@@@@CreateRequest extends FormRequest
+{
+    public function rules()
+    {
+        return [
+                
+        ];
+    }
+}
+";
+
+    private $updateFormRequest = "<?php
+
+namespace App\@@@@@@@@@@@@\Requests;
+    
+use Illuminate\Foundation\Http\FormRequest;
+    
+class @@@@@@@@@@@@UpdateRequest extends FormRequest
+{
+    public function rules()
+    {
+        return [
+                
+        ];
+    }
+}
+";
+
     private const REPLACER          = "@@@@@@@@@@@@";
     private const TABLENAMEREPLACER = "!!!!!!!!!!!!!";
 
@@ -226,6 +260,8 @@ class @@@@@@@@@@@@Seeder extends Seeder
         $_name = ucfirst($_name);
 
         // Set namespaces & class names
+        $this->createFormRequest        = str_replace(self::REPLACER, $_name, $this->createFormRequest);
+        $this->updateFormRequest        = str_replace(self::REPLACER, $_name, $this->updateFormRequest);
         $this->datamapper_template      = str_replace(self::REPLACER, $_name, $this->datamapper_template);
         $this->controller_template      = str_replace(self::REPLACER, $_name, $this->controller_template);
         $this->entities_template        = str_replace(self::REPLACER, $_name, $this->entities_template);
@@ -252,6 +288,7 @@ class @@@@@@@@@@@@Seeder extends Seeder
         mkdir($_base."Repositories");
         mkdir($_base."Resources");
         mkdir($_base."Services");
+        // mkdir($_base."Requests");
 
         file_put_contents($_base."DataMappers/{$_name}DataMapper.php"           , $this->datamapper_template);
         file_put_contents($_base."Controllers/{$_name}Controller.php"           , $this->controller_template);
@@ -261,11 +298,12 @@ class @@@@@@@@@@@@Seeder extends Seeder
         file_put_contents($_base."Resources/{$_name}Resource.php"               , $this->resource_template);
         file_put_contents($_base."Resources/{$_name}Collection.php"             , $this->collection_template);
         file_put_contents($_base."Services/{$_name}Service.php"                 , $this->service_template);
+        // file_put_contents($_base."Requests/{$_name}CreateRequest.php"           , $this->createFormRequest);
+        // file_put_contents($_base."Requests/{$_name}UpdateRequest.php"           , $this->updateFormRequest);
         
         file_put_contents(base_path()."/database/factories/{$_name}Factory.php" , $this->factory_template);
-        // file_put_contents(base_path()."/database/seeders/{$_name}Seeder.php" , $this->seeder_template);
 
-        // MAke migration
+        // Make migration
         $this->call("make:migration", ['name' => "create_".$_tableName."_table"]);
 
         $this->info('Resource Created');
