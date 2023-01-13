@@ -1370,12 +1370,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wkdwilliams/datamapper.git",
-                "reference": "b39ca5642d3f7d31d9d30f1af598307d4934ad12"
+                "reference": "1e992859d488dcbabdde76555d6268bd273b6fa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wkdwilliams/datamapper/zipball/b39ca5642d3f7d31d9d30f1af598307d4934ad12",
-                "reference": "b39ca5642d3f7d31d9d30f1af598307d4934ad12",
+                "url": "https://api.github.com/repos/wkdwilliams/datamapper/zipball/1e992859d488dcbabdde76555d6268bd273b6fa6",
+                "reference": "1e992859d488dcbabdde76555d6268bd273b6fa6",
                 "shasum": ""
             },
             "require": {
@@ -1404,7 +1404,7 @@
                 "issues": "https://github.com/wkdwilliams/datamapper/issues",
                 "source": "https://github.com/wkdwilliams/datamapper/tree/master"
             },
-            "time": "2023-01-13T18:31:20+00:00"
+            "time": "2023-01-13T19:40:56+00:00"
         },
         {
             "name": "monolog/monolog",

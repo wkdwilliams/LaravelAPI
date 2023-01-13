@@ -29,6 +29,10 @@ class CategoryController extends Controller
         'name' => 'required'
     ];
 
+    protected array $updateRules = [
+        'name' => 'required'
+    ];
+
     public function getResourceByName(string $name): JsonResponse
     {
         $repos = $this->service->getResourceByName($name);

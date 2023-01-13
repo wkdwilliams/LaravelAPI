@@ -14,5 +14,5 @@ Route::group(['middleware' => ['auth']], function(){
 });
 
 // Categories
-Route::resource('/category', '\App\category\Controllers\categoryController');
-Route::get('/category/name/{name}' , '\App\category\Controllers\categoryController@getResourceByName');
+Route::resource('/category'         , '\App\category\Controllers\categoryController');
+Route::get('/category/name/{name}'  , '\App\category\Controllers\categoryController@getResourceByName');

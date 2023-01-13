@@ -14,9 +14,7 @@ use Lewy\DataMapper\Traits\CreateResourceWithAuthId;
 
 class ProductController extends Controller
 {
-
     use ResourceMustBelongToAuthenticatedUser;
-    use CreateResourceWithAuthId;
     
     protected array $classes = [
         'datamapper' => ProductDataMapper::class,
