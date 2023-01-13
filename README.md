@@ -20,29 +20,6 @@ Route::resource('/category', '\App\Category\Controllers\CategoryController');
 This command also creates the migration, factory & provides the seeder you should include.
 
 ## Controller
-
-### Gaurded update fields
-To prevent certain fields from being updated when using the update method, you may override the default behaviour with this:
-
-```php
-protected array $guardedUpdateFields  = [
-	'api_token'
-];
-```
-
-This will prevent users from sending POST property `api_token` in an attempt to update a field they shouldn't.
-
-### Gaurded create fields
-To prevent certain fields from being updated when using the update method, you may override the default behaviour with this:
-
-```php
-protected array $guardedCreateFields  = [
-	'api_token'
-];
-```
-
-This will prevent users from sending POST property `api_token` in an attempt to set the field when creating it.
-
 ### Create rules
 
 Here we can define the validation rules for when we intend to create a resource.
@@ -64,6 +41,8 @@ protected array $updateRules = [
     'description' => 'required|string|max:255'
 ];
 ```
+
+Properties not set in the rules will be ignored by the repository when updating & creating resources.
 
 ### Pagination
 By default, pagination is disabled. When extending `Lewy\DataMapper\Controller`, you may override this inside your controller class with:
