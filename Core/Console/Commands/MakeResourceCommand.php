@@ -110,6 +110,10 @@ class @@@@@@@@@@@@ extends Model
     protected \$appends = [
             
     ];
+
+    public \$fillable = [
+        //
+    ];
 }
 ";
 
