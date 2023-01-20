@@ -10,7 +10,13 @@ class Product extends Model
     protected $table = "products";
     
     protected $appends = [
-            'category'
+        'category'
+    ];
+
+    public $fillable = [
+        'user_id',
+        'category_id',
+        'name'
     ];
 
     public function category()

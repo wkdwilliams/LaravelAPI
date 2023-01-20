@@ -13,6 +13,11 @@ class Message extends Model
         'images'
     ];
 
+    public $fillable = [
+        'user_id',
+        'message'
+    ];
+
     public function images()
     {
         return $this->hasMany(Image::class);

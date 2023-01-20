@@ -20,6 +20,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'messages'
     ];
 
+    public $fillable = [
+        'name',
+        'email',
+        'password'
+    ];
+
     public function messages()
     {
         return $this->hasMany(Message::class);

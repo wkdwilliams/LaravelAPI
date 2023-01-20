@@ -27,11 +27,12 @@ class ProductController extends Controller
 
     protected array $createRules = [
         'category_id'   => 'required',
-        'name'          => 'required',
+        'name'          => 'required|string|max:15'
     ];
 
     protected array $updateRules = [
-        'name' => 'string|max:15'
+        'category_id'   => 'integer',
+        'name'          => 'string|max:15'
     ];
     
 }

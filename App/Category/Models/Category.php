@@ -11,4 +11,8 @@ class Category extends Model
     protected $appends = [
             
     ];
+
+    public $fillable = [
+        'name'
+    ];
 }
