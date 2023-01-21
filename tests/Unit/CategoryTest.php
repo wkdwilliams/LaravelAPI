@@ -3,10 +3,14 @@
 use App\Category\Entities\CategoryEntity;
 use App\Category\Repositories\CategoryRepository;
 use App\Category\Services\CategoryService;
+use Dotenv\Parser\Value;
 use Tests\TestCase;
 use Tests\TestRequests;
 use Illuminate\Support\Str;
 use Lewy\DataMapper\Entity;
+use Lewy\DataMapper\EntityCollection;
+
+use function PHPUnit\Framework\assertEquals;
 
 class CategoryTest extends TestCase
 {
@@ -62,7 +66,7 @@ class CategoryTest extends TestCase
 
     public function testCanDeleteResourceWithEntity()
     {
-        $lastRecord = $this->getRepository()->orderBy('id', 'desc')->limit(1)->entity();
+        $lastRecord = $this->getRepository()->lastRecord()->entity();
         $oldName    = $lastRecord->getName();
 
         $category = $this->getRepository()->delete($lastRecord);
@@ -74,24 +78,140 @@ class CategoryTest extends TestCase
         $this->assertNotEquals($oldName, $deleted->getName());
     }
 
-    public function testCanDeleteResourceWithRepositoryEloquent()
+    public function testCanCreateResourceWithMultipleData()
     {
-        $newName = str::random(10);
+        $data = [];
 
-        $newCategory = new CategoryEntity();
-        $newCategory->setName($newName);
+        for ($i = 0; $i < 10; $i++)
+            $data[] = [
+                'name' => Str::random(5)
+            ];
 
-        $create = $this->getRepository()->create($newCategory);
+        $created = $this->getRepository()->createMultiple($data);
 
-        $lastRecord = $this->getRepository()->orderBy('id', 'desc')->limit(1);
+        $this->assertInstanceOf(EntityCollection::class, $created);
+        $this->assertEquals(10, $created->count());
 
-        $category = $lastRecord->delete();
+        foreach ($data as $i => $value) {
+            assertEquals($value['name'], $created->getEntities()[$i]->getName());
+        }
+    }
 
-        $this->assertInstanceOf(Entity::class, $category);
+    public function testCanCreateResourceWithEntityCollection()
+    {
+        $entities = new EntityCollection();
+        $names    = [];
 
-        $deleted = $this->getRepository()->orderBy('id', 'desc')->limit(1)->entity();
+        for ($i = 0; $i < 10; $i++)
+        {
+            $entity     = new CategoryEntity();
+            $name       = Str::random();
+            $names[]    = $name;
+            $entity->setName($name);
+            $entities->push($entity);
+        }
 
-        $this->assertNotEquals($newName, $deleted->getName());
+        $created = $this->getRepository()->createMultiple($entities);
+
+        $this->assertInstanceOf(EntityCollection::class, $created);
+        $this->assertEquals(10, $created->count());
+
+        foreach ($entities->getEntities() as $i => $value) {
+            assertEquals($value->getName(), $created->getEntities()[$i]->getName());
+        }
+    }
+
+    public function testCanUpdateResourceWithMultipleData()
+    {
+        $entities = [];
+        $names    = [];
+
+        $records = $this->getRepository()->orderBy('id', 'desc')->limit(10)->entityCollection();
+
+        foreach($records->getEntities() as $e)
+        {
+            $name       = Str::random();
+            $names[]    = $name;
+            $entities[] = [
+                'id'   => $e->getId(),
+                'name' => $name
+            ];
+        }
+
+        $updated = $this->getRepository()->updateMultiple($entities);
+
+        $this->assertInstanceOf(EntityCollection::class, $updated);
+        $this->assertEquals(10, $updated->count());
+
+        foreach ($entities as $i => $value) {
+            assertEquals($value['name'], $updated->getEntities()[$i]->getName());
+        }
+    }
+
+    public function testCanUpdateResourceWithEntityCollection()
+    {
+        $entities = new EntityCollection();
+        $names    = [];
+
+        $records = $this->getRepository()->orderBy('id', 'desc')->limit(10)->entityCollection();
+
+        foreach($records->getEntities() as $e)
+        {
+            $name       = Str::random();
+            $names[]    = $name;
+            $e->setName($name);
+            $entities->push($e);
+        }
+
+        $updated = $this->getRepository()->updateMultiple($entities);
+
+        $this->assertInstanceOf(EntityCollection::class, $updated);
+        $this->assertEquals(10, $updated->count());
+
+        foreach ($entities->getEntities() as $i => $value) {
+            assertEquals($value->getName(), $updated->getEntities()[$i]->getName());
+        }
+    }
+
+    public function testCanDeleteResourceWithEntityCollection()
+    {
+        $lastRecord = $this->getRepository()->orderBy('id', 'desc')->limit(20)->entityCollection();
+
+        $category = $this->getRepository()->deleteMultiple($lastRecord);
+
+        $this->assertInstanceOf(EntityCollection::class, $category);
+    }
+
+    public function testCanDeleteResourceWithMultipleData()
+    {
+        // We have to create more records
+        $entities = new EntityCollection();
+        $names    = [];
+
+        for ($i = 0; $i < 10; $i++)
+        {
+            $entity     = new CategoryEntity();
+            $name       = Str::random();
+            $names[]    = $name;
+            $entity->setName($name);
+            $entities->push($entity);
+        }
+
+        $created = $this->getRepository()->createMultiple($entities);
+
+        $ids = [];
+
+        $lastRecord = $this->getRepository()->orderBy('id', 'desc')->limit(10)->entityCollection();
+
+        foreach ($lastRecord->getEntities() as $value) {
+            $ids[] = [
+                'id' => $value->getId()
+            ];
+        }
+
+        $category = $this->getRepository()->deleteMultiple($ids);
+
+        $this->assertInstanceOf(EntityCollection::class, $category);
     }
 
 }
