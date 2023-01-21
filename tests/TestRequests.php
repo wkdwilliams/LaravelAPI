@@ -14,7 +14,7 @@ trait TestRequests
     public function testUpdateResource()
     {
         // Get resource of which we created in the create test
-        $entity = (new $this->repository)
+        $entity = $this->getRepository()
                 ->queryBuilder(function($m){
                     return $m->latest();
                 })->entity();
@@ -35,7 +35,7 @@ trait TestRequests
     public function testGetResource()
     {
         // Get resource of which we created in the create test
-        $entity = (new $this->repository)
+        $entity = $this->getRepository()
                 ->queryBuilder(function($m){
                     return $m->latest();
                 })->entity();
@@ -49,7 +49,7 @@ trait TestRequests
     public function testDeleteResource()
     {
         // Get resource of which we created in the create test
-        $entity = (new $this->repository)
+        $entity = $this->getRepository()
                 ->queryBuilder(function($m){
                     return $m->latest();
                 })->entity();

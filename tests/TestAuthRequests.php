@@ -15,7 +15,7 @@ trait TestAuthRequests
     public function testUpdateResource()
     {
         // Get resource of which we created in the create test
-        $entity = (new $this->repository)
+        $entity = $this->getRepository()
                 ->queryBuilder(function($m){
                     return $m->latest();
                 })->entity();
@@ -36,7 +36,7 @@ trait TestAuthRequests
     public function testGetResource()
     {
         // Get resource of which we created in the create test
-        $entity = (new $this->repository)
+        $entity = $this->getRepository()
                 ->queryBuilder(function($m){
                     return $m->latest();
                 })->entity();
@@ -50,7 +50,7 @@ trait TestAuthRequests
     public function testDeleteResource()
     {
         // Get resource of which we created in the create test
-        $entity = (new $this->repository)
+        $entity = $this->getRepository()
                 ->queryBuilder(function($m){
                     return $m->latest();
                 })->entity();
@@ -63,7 +63,7 @@ trait TestAuthRequests
     public function testCannotGetResourceNotBelongingToYou()
     {
         // Get a resource that doesn't belong to our authenticated user
-        $entity = (new $this->repository)->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
+        $entity = $this->getRepository()->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
 
         $response = $this->actingAs($this->getAuthUser())->get('/api/'.$this->endPointName.'/'.$entity->getId());
 
@@ -88,7 +88,7 @@ trait TestAuthRequests
     public function testCannotUpdateResourceNotBelongingToYou()
     {
         // Get resource that doesn't belong to authenticated user
-        $entity = (new $this->repository)->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
+        $entity = $this->getRepository()->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
 
         $response = $this->actingAs($this->getAuthUser())->put('/api/'.$this->endPointName.'/'.$entity->getId(), $this->updateParams);
 
@@ -98,7 +98,7 @@ trait TestAuthRequests
     public function testCannotDeleteResourceNotBelongingToYou()
     {
         // Get resource that doesn't belong to authenticated user
-        $entity = (new $this->repository)->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
+        $entity = $this->getRepository()->whereOperator('user_id', '!=', $this->getAuthUser()->id)->entity();
 
         $response = $this->actingAs($this->getAuthUser())->delete('/api/'.$this->endPointName.'/'.$entity->getId());
 
