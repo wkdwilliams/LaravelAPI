@@ -155,7 +155,7 @@ class UserService extends Service
 The above code will find all records, and group it by the `status` column.
 
 ### Caching
-The repository will cache results if `APP_DEBUG` is set to false in the `.env` file
+The repository will cache results if `useCache` is set to false in the datamapper config file. The default value is `false`
 
 ## Datamapper
 
