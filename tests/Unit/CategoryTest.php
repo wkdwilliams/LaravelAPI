@@ -1,6 +1,7 @@
 <?php
 
 use App\Category\Entities\CategoryEntity;
+use App\Category\Models\Category;
 use App\Category\Repositories\CategoryRepository;
 use App\Category\Services\CategoryService;
 use Dotenv\Parser\Value;
@@ -78,12 +79,7 @@ class CategoryTest extends TestCase
 
     public function testCanCreateResourceWithMultipleData()
     {
-        $data = [];
-
-        for ($i = 0; $i < 10; $i++)
-            $data[] = [
-                'name' => Str::random(5)
-            ];
+        $data = Category::factory(10)->create()->toArray();
 
         $created = $this->getRepository()->createMultiple($data);
 
@@ -126,7 +122,7 @@ class CategoryTest extends TestCase
 
         $records = $this->getRepository()->orderBy('id', 'desc')->limit(10)->entityCollection();
 
-        foreach($records->getEntities() as $e)
+        foreach($records->toArray() as $e)
         {
             $name       = Str::random();
             $names[]    = $name;
@@ -153,7 +149,7 @@ class CategoryTest extends TestCase
 
         $records = $this->getRepository()->orderBy('id', 'desc')->limit(10)->entityCollection();
 
-        foreach($records->getEntities() as $e)
+        foreach($records->toArray() as $e)
         {
             $name       = Str::random();
             $names[]    = $name;
