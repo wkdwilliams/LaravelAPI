@@ -49,12 +49,10 @@ class CategoryTest extends TestCase
     {
         $lastRecord = $this->getRepository()->orderBy('id', 'desc')->limit(1)->entity();
 
-        $category = $this->getService()->getResourceById($lastRecord->getId());
-
         $newName = str::random(10);
-        $category->setName($newName);
+        $lastRecord->setName($newName);
 
-        $update = $this->getRepository()->update($category);
+        $update = $this->getRepository()->update($lastRecord);
 
         $this->assertInstanceOf(Entity::class, $update);
         $this->assertEquals($newName, $update->getName());
@@ -69,13 +67,13 @@ class CategoryTest extends TestCase
         $lastRecord = $this->getRepository()->lastRecord()->entity();
         $oldName    = $lastRecord->getName();
 
-        $category = $this->getRepository()->delete($lastRecord);
+        $deleted = $this->getRepository()->delete($lastRecord);
 
-        $this->assertInstanceOf(Entity::class, $category);
+        $this->assertInstanceOf(Entity::class, $deleted);
 
-        $deleted = $this->getRepository()->orderBy('id', 'desc')->limit(1)->entity();
+        $newRecord = $this->getRepository()->lastRecord()->entity();
 
-        $this->assertNotEquals($oldName, $deleted->getName());
+        $this->assertNotEquals($oldName, $newRecord->getName());
     }
 
     public function testCanCreateResourceWithMultipleData()
