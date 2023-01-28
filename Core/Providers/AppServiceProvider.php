@@ -17,5 +17,8 @@ class AppServiceProvider extends ServiceProvider
         Factory::guessFactoryNamesUsing(function ($class) {
             return 'Database\\Factories\\' . class_basename($class) . 'Factory';
         });
+
+        if ($this->app->environment('local')) 
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
     }
 }

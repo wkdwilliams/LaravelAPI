@@ -175,7 +175,7 @@ return [
         Core\Providers\AppServiceProvider::class,
         Core\Providers\AuthServiceProvider::class,
         Core\Providers\EventServiceProvider::class,
-        Core\Providers\RouteServiceProvider::class,
+        Core\Providers\RouteServiceProvider::class
 
     ],
 
