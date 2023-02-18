@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Category\Controllers;
-    
+
 use App\Category\DataMappers\CategoryDataMapper;
 use App\Category\Models\Category;
 use App\Category\Repositories\CategoryRepository;
@@ -15,7 +15,7 @@ class CategoryController extends Controller
 {
 
     protected int $paginate = 5;
-    
+
     protected array $classes = [
         'datamapper' => CategoryDataMapper::class,
         'repository' => CategoryRepository::class,
@@ -41,5 +41,5 @@ class CategoryController extends Controller
             new $this->classes['resource']($repos)
         );
     }
-    
+
 }
