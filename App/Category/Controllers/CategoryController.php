@@ -3,7 +3,6 @@
 namespace App\Category\Controllers;
 
 use App\Category\DataMappers\CategoryDataMapper;
-use App\Category\Models\Category;
 use App\Category\Repositories\CategoryRepository;
 use App\Category\Resources\CategoryCollection;
 use App\Category\Resources\CategoryResource;
@@ -21,8 +20,7 @@ class CategoryController extends Controller
         'repository' => CategoryRepository::class,
         'resource'   => CategoryResource::class,
         'collection' => CategoryCollection::class,
-        'service'    => CategoryService::class,
-        'model'      => Category::class,
+        'service'    => CategoryService::class
     ];
 
     protected array $createRules = [
